@@ -1,0 +1,33 @@
+{
+  "name": "enduro-timer-v2-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "dev": "npm run migrate:dev && nodemon -r tsconfig-paths/register src/index.ts",
+    "start": "npm run migrate:dev && node dist/src/index.js",
+    "migrate:dev": "prisma migrate dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.3.1",
+    "class-validator": "^0.14.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9",
+    "prisma": "^6.3.1",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.7.3"
+  }
+}
