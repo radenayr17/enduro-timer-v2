@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import PrismaClient from "@/prisma/client";
-import CreateUserDto from "@/dtos/users/create-user.dto";
-import { hashPassword } from "@/utils/encrypt";
 import { ErrorMessage } from "@/constants/error";
+import CreateUserDto from "@/dtos/users/create-user.dto";
+import PrismaClient from "@/prisma/client";
+import { hashPassword } from "@/utils/encrypt";
 
 const createUser = async (req: Request<unknown, unknown, CreateUserDto>, res: Response) => {
   const { username, password, firstName, lastName } = req.body;

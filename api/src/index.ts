@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 
-import { raceRoute, userRoute } from "@/routes";
+import { raceRoute, userRoute, authRoute } from "@/routes";
 
 const app: Express = express();
 const port = process.env.PORT || 8000;
@@ -8,9 +8,9 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+  res.send("Welcome to Enduro Timer API");
 });
-
+app.use("/auth", authRoute);
 app.use("/races", raceRoute);
 app.use("/users", userRoute);
 

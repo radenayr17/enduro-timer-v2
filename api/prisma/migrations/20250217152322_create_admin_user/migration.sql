@@ -1,0 +1,2 @@
+INSERT INTO `User` (id, username, password, firstName, lastName)
+  VALUES ('ae6183f2-48b1-4e86-b0fb-9902c3d80a3e', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'admin');
