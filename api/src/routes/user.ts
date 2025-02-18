@@ -1,11 +1,9 @@
-import { RequestHandler, Router } from "express";
+import { Router } from "express";
 
-import { getUsers, createUser } from "@/services/users";
-import { bodyDtoValidator } from "@/middlewares/validator";
-import { asyncHandlerWrapper } from "@/middlewares/async-handler";
+import { asyncHandlerWrapper, bodyDtoValidator } from "@/middlewares";
+import { createUser, getUsers } from "@/services/users";
 
 import { CreateUserDto } from "@/dtos/users";
-import { verifyUserToken } from "@/middlewares/verify-user-token";
 
 const router = Router();
 

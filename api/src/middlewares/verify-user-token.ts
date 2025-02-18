@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { ErrorMessage } from "@/constants/error";
 import { verifyUserToken as verifyToken } from "@/utils/encrypt";
 
-export const verifyUserToken = () => async (req: Request, res: Response, next: NextFunction) => {
+const verifyUserToken = () => async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1] ?? "";
 
   if (!token) {
@@ -21,8 +21,12 @@ export const verifyUserToken = () => async (req: Request, res: Response, next: N
     const message = error.message;
     const status = message === "invalid token" ? 401 : 500;
 
+    console.log(message);
+
     return res
       .status(status)
       .json({ message: status === 401 ? ErrorMessage.UNAUTHORIZED : ErrorMessage.INTERNAL_SERVER_ERROR });
   }
 };
+
+export default verifyUserToken;

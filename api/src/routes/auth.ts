@@ -1,8 +1,7 @@
 import { Router } from "express";
 
 import { loginUser } from "@/services/auth";
-import { bodyDtoValidator } from "@/middlewares/validator";
-import { asyncHandlerWrapper } from "@/middlewares/async-handler";
+import { asyncHandlerWrapper, bodyDtoValidator } from "@/middlewares/";
 
 import { LoginDto } from "@/dtos/users";
 

@@ -1,7 +1,7 @@
 import express, { Express, Request, Response, RequestHandler } from "express";
 
 import { raceRoute, userRoute, authRoute } from "@/routes";
-import { verifyUserToken } from "@/middlewares/verify-user-token";
+import { verifyUserToken } from "@/middlewares";
 
 const app: Express = express();
 const port = process.env.PORT || 8000;
