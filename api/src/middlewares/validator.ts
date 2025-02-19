@@ -15,3 +15,7 @@ const dtoValidator = async (dto: any, data: Record<string, any>, req: Request, r
 export const bodyDtoValidator = (dto: any) => async (req: Request, res: Response, next: NextFunction) => {
   await dtoValidator(dto, req.body, req, res, next);
 };
+
+export const parameterDtoValidator = (dto: any) => async (req: Request, res: Response, next: NextFunction) => {
+  await dtoValidator(dto, req.params, req, res, next);
+};

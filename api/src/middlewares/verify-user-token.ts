@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { ErrorMessage } from "@/constants/error";
+import { ErrorMessage, JWTError } from "@/constants/error";
 import { verifyUserToken as verifyToken } from "@/utils/encrypt";
 
 const verifyUserToken = () => async (req: Request, res: Response, next: NextFunction) => {
@@ -17,11 +17,11 @@ const verifyUserToken = () => async (req: Request, res: Response, next: NextFunc
 
     next();
   } catch (err) {
+    console.error(err);
+
     const error = err as Error;
     const message = error.message;
-    const status = message === "invalid token" ? 401 : 500;
-
-    console.log(message);
+    const status = (Object.values(JWTError) as string[]).includes(message) ? 401 : 500;
 
     return res
       .status(status)

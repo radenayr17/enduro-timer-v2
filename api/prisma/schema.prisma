@@ -24,16 +24,85 @@ model User {
   updatedAt DateTime? @updatedAt
 
   UserSession UserSession[]
+  Race        Race[]
 }
 
 model UserSession {
   id           String   @id @default(uuid())
   userId       String
-  idToken      String @db.Text
-  refreshToken String @db.Text
+  idToken      String   @db.Text
+  refreshToken String   @db.Text
   expiresAt    DateTime
 
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model Race {
+  id          String   @id @default(uuid())
+  name        String
+  description String   @db.Text()
+  from        DateTime
+  to          DateTime
+  userId      String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  user         User           @relation(fields: [userId], references: [id])
+  RaceStage    RaceStage[]
+  RaceCategory RaceCategory[]
+}
+
+model RaceStage {
+  id     String @id @default(uuid())
+  name   String
+  key    String
+  raceId String
+
+  createdAt DateTime @default(now())
+
+  race      Race        @relation(fields: [raceId], references: [id])
+  RacerTime RacerTime[]
+}
+
+model RaceCategory {
+  id     String @id @default(uuid())
+  name   String
+  key    String
+  raceId String
+
+  createdAt DateTime @default(now())
+
+  race  Race    @relation(fields: [raceId], references: [id])
+  racer Racer[]
+}
+
+model Racer {
+  id         String @id @default(uuid())
+  number     String
+  firstName  String
+  lastName   String
+  categoryId String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  category  RaceCategory @relation(fields: [categoryId], references: [id])
+  RacerTime RacerTime[]
+}
+
+model RacerTime {
+  id         String    @id @default(uuid())
+  startTime  DateTime
+  finishTime DateTime?
+  diffTime   Int       @default(0)
+  racerId    String
+  stageId    String
+
+  createdAt DateTime @default(now())
+
+  racer Racer     @relation(fields: [racerId], references: [id])
+  stage RaceStage @relation(fields: [stageId], references: [id])
 }

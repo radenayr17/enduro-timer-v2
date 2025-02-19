@@ -8,16 +8,14 @@ class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsAlphanumeric()
   password: string;
 
   @IsString()
-  @IsAlpha()
+  @IsNotEmpty()
   firstName: string;
 
   @IsString()
   @IsNotEmpty()
-  @IsAlpha()
   lastName: string;
 
   constructor(data: CreateUserDto) {
