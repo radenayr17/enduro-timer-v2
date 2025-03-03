@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
-const ID_TOKEN_EXPIRES_IN = "1h";
+const ID_TOKEN_EXPIRES_IN = "1d";
 const REFRESH_TOKEN_EXPIRES_IN = "7d";
 
 export type TUserTokenInput = {
