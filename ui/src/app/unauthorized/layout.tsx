@@ -1,11 +1,7 @@
-import Providers from "./providers";
-
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+      <body>{children}</body>
     </html>
   );
 };
