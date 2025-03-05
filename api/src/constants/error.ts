@@ -7,6 +7,11 @@ export enum ErrorMessage {
   EXPIRED_TOKEN = "Expired token",
   INTERNAL_SERVER_ERROR = "Internal server error",
   RACE_NOT_FOUND = "Race not found",
+  NOT_ALLOWED = "Not allowed",
+}
+
+export enum RaceErrorMessage {
+  RACE_CANNOT_BE_DELETED = "Race cannot be deleted at this moment",
 }
 
 export enum JWTError {

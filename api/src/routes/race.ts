@@ -11,6 +11,7 @@ import {
 import { CreateRaceDto, CreateRaceStageDto, GetRacerByCategoryDto } from "@/dtos/races";
 import { IDDto } from "@/dtos/common";
 import { asyncHandlerWrapper, bodyDtoValidator, parameterDtoValidator } from "@/middlewares";
+import deleteRace from "@/services/races/deleteRace";
 
 const router = Router();
 
@@ -34,5 +35,7 @@ router.post(
   parameterDtoValidator(IDDto),
   asyncHandlerWrapper(createRaceCategory)
 );
+
+router.delete("/:id", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteRace));
 
 export default router;

@@ -1,7 +1,7 @@
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
-import React from "react";
+import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
+import { ToastContainer } from "react-toastify";
 
-import { DRAWER_WITH, APP_BAR_TEXT } from "@/constants";
+import { APP_BAR_TEXT, DRAWER_WITH } from "@/constants";
 
 const Content = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -14,7 +14,8 @@ const Content = ({ children }: { children: React.ReactNode }) => {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      {children}
+      <Container>{children}</Container>
+      <ToastContainer position="bottom-right" />
     </Box>
   );
 };

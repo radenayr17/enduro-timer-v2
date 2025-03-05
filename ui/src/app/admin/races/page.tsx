@@ -1,16 +1,18 @@
 "use client";
-import { Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
-import { useGetRaces } from "@/hooks/api/race";
-
+import Form from "./form";
 import Table from "./table";
 
 const RacersPage = () => {
   return (
-    <>
-      <Typography variant="h3">Race</Typography>
+    <Box>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">Race</Typography>
+        <Form />
+      </Stack>
       <Table />
-    </>
+    </Box>
   );
 };
 
