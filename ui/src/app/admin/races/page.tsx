@@ -1,7 +1,7 @@
 "use client";
 import { Box, Stack, Typography } from "@mui/material";
 
-import Form from "./form";
+import { RaceFormModal } from "./form";
 import Table from "./table";
 
 const RacersPage = () => {
@@ -9,7 +9,7 @@ const RacersPage = () => {
     <Box>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
         <Typography variant="h4">Race</Typography>
-        <Form />
+        <RaceFormModal />
       </Stack>
       <Table />
     </Box>

@@ -12,6 +12,7 @@ import {
   getRacers,
   getRacersByCategory,
   getRaces,
+  updateRace,
 } from "@/services/races";
 
 const router = Router();
@@ -24,6 +25,7 @@ router.get(
   parameterDtoValidator(GetRacerByCategoryDto),
   asyncHandlerWrapper(getRacersByCategory)
 );
+
 router.post("/", bodyDtoValidator(CreateRaceDto), asyncHandlerWrapper(createRace));
 router.post(
   "/:id/stages",
@@ -37,6 +39,8 @@ router.post(
   parameterDtoValidator(IDDto),
   asyncHandlerWrapper(createRaceCategory)
 );
+
+router.put("/:id", bodyDtoValidator(CreateRaceDto), parameterDtoValidator(IDDto), asyncHandlerWrapper(updateRace));
 
 router.delete("/:id", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteRace));
 

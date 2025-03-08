@@ -4,13 +4,13 @@ export const DRAWER_WITH = 240;
 export const ADMIN_RACE_PATH = "/admin/races";
 
 export const MENU_ITEMS = [
-  { text: "Races", path: ADMIN_RACE_PATH },
+  { text: "Race", path: ADMIN_RACE_PATH },
   { text: "Users", path: "/admin/users" },
   { text: "Results", path: "/admin/results" },
 ];
 
 export const RACE_TABS: { label: string; value: string }[] = [
-  { label: "Details", value: "detail" },
+  { label: "Details", value: "details" },
   { label: "Categories", value: "categories" },
   { label: "Stages", value: "stages" },
   { label: "Racers", value: "racers" },

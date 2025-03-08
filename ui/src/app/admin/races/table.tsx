@@ -1,12 +1,12 @@
-import { Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import ConfirmDialog from "@/components/confirm-dialog";
+import { DateFormat } from "@/constants/date";
+import { RaceApiHooks } from "@/constants/hooks";
+import { useDeleteRace, useGetRaces } from "@/hooks/api/race";
+import { formatDate } from "@/utils/date";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Link from "next/link";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
-import ConfirmDialog from "@/components/confirm-dialog";
-import { DateFormat } from "@/constants/date";
-import { useGetRaces, useDeleteRace } from "@/hooks/api/race";
-import { formatDate } from "@/utils/date";
-import { RaceApiHooks } from "@/constants/hooks";
 
 const RacesTable = () => {
   const { data } = useGetRaces();

@@ -6,6 +6,10 @@ import { useState } from "react";
 import { ADMIN_RACE_PATH, RACE_TABS } from "@/constants";
 import { useGetRace } from "@/hooks/api/race";
 import Loader from "@/components/loader";
+import { TabPanel } from "@/components/tabs";
+import BreadCrumbs, { BreadCrumbsProps } from "@/components/breadcrumbs";
+
+import DetailsTab from "./details";
 
 const RacePage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,10 +24,13 @@ const RacePage = () => {
     }
   }
 
+  const breadcrumbs: BreadCrumbsProps = [{ label: "Race", link: ADMIN_RACE_PATH }, { label: data.name }];
+
   return (
     <Box>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+      <Stack mb={2} spacing={2}>
         <Typography variant="h4">{data.name}</Typography>
+        <BreadCrumbs data={breadcrumbs} />
       </Stack>
       <Card>
         <CardContent>
@@ -32,6 +39,18 @@ const RacePage = () => {
               <Tab label={tab.label} id={`race-tab-${tab.value}`} key={tab.value} value={tab.value} />
             ))}
           </Tabs>
+          <TabPanel value={tab} index="details">
+            <DetailsTab data={data} />
+          </TabPanel>
+          <TabPanel value={tab} index="categories">
+            categories
+          </TabPanel>
+          <TabPanel value={tab} index="stages">
+            stages
+          </TabPanel>
+          <TabPanel value={tab} index="racers">
+            racers
+          </TabPanel>
         </CardContent>
       </Card>
     </Box>

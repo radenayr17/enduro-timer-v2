@@ -3,12 +3,22 @@ import { useMutation, useQuery } from "react-query";
 import { RaceApiHooks } from "@/constants/hooks";
 import { api } from "@/services/api";
 
-interface Race {
+export interface RaceCategory {
+  id: string;
+  key: string;
+  name: string;
+}
+
+export interface RaceStage extends RaceCategory {}
+
+export interface Race {
   id: string;
   name: string;
   description: string;
   from: string;
   to: string;
+  RaceCategory: RaceCategory[];
+  RaceStage: RaceStage[];
 }
 
 interface Races {
@@ -46,6 +56,16 @@ const createRace = async (body: Omit<Race, "id">) => {
 
 export function useCreateRace() {
   return useMutation(createRace);
+}
+
+const updateRace = async ({ id, body }: { id: Race["id"]; body: Omit<Race, "id"> }) => {
+  const { data } = await api.put<unknown, Race>(`${RACE_BASE_URL}/${id}`, body);
+
+  return data;
+};
+
+export function useUpdateRace() {
+  return useMutation(updateRace);
 }
 
 const deleteRace = async (id: Race["id"]) => {

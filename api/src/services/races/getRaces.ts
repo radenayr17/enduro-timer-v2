@@ -8,6 +8,7 @@ const SELECT_FIELDS = {
     id: true,
     name: true,
     key: true,
+    raceId: true,
   },
   orderBy: { createdAt: Prisma.SortOrder.asc },
 };
