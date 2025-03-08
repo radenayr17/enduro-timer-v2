@@ -15,7 +15,7 @@ const createRaceCategory = async (req: Request<IDDto, unknown, CreateRaceStageDt
   });
 
   if (!race) {
-    return res.status(404).json({ message: ErrorMessage.RACE_NOT_FOUND });
+    return res.status(404).json({ message: ErrorMessage.INVALID_REQUEST });
   }
 
   const category = await PrismaClient.raceCategory.create({

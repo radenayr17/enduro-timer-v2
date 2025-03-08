@@ -14,7 +14,7 @@ const deleteRace = async (req: Request<IDDto>, res: Response) => {
   });
 
   if (!race) {
-    return res.status(404).json({ message: ErrorMessage.RACE_NOT_FOUND });
+    return res.status(404).json({ message: ErrorMessage.INVALID_REQUEST });
   }
 
   if (race.RaceCategory.length && race.RaceStage.length) {

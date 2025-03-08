@@ -1,17 +1,31 @@
-import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-
-import { useGetRaces } from "@/hooks/api/race";
+import { Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import Link from "next/link";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import ConfirmDialog from "@/components/confirm-dialog";
+import { DateFormat } from "@/constants/date";
+import { useGetRaces, useDeleteRace } from "@/hooks/api/race";
+import { formatDate } from "@/utils/date";
+import { RaceApiHooks } from "@/constants/hooks";
 
 const RacesTable = () => {
-  const { data, isLoading } = useGetRaces();
+  const { data } = useGetRaces();
+  const { mutate: deleteRace } = useDeleteRace();
+  const queryClient = useQueryClient();
   const records = data?.data ?? [];
+
+  const handleDelete = (id: string) => {
+    deleteRace(id, {
+      onSuccess: () => {
+        toast.success("Race deleted successfully");
+
+        queryClient.invalidateQueries(RaceApiHooks.getRaces);
+      },
+      onError: (error) => {
+        toast.error((error as Error).message);
+      },
+    });
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -22,15 +36,26 @@ const RacesTable = () => {
             <TableCell>Description</TableCell>
             <TableCell>From</TableCell>
             <TableCell>To</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {records.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.name}</TableCell>
+              <TableCell>
+                <Link href={`/admin/races/${row.id}`}>{row.name}</Link>
+              </TableCell>
               <TableCell>{row.description}</TableCell>
-              <TableCell>{row.from}</TableCell>
-              <TableCell>{row.to}</TableCell>
+              <TableCell>{formatDate(row.from, DateFormat.mmDDyyyy)}</TableCell>
+              <TableCell>{formatDate(row.from, DateFormat.mmDDyyyy)}</TableCell>
+              <TableCell>
+                <ConfirmDialog
+                  btnText="Delete"
+                  text="Are you sure you want to delete?"
+                  title={`Delete '${row.name}'`}
+                  onConfirm={() => handleDelete(row.id)}
+                />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

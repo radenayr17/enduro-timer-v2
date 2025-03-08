@@ -1,21 +1,23 @@
 import { Router } from "express";
 
+import { IDDto } from "@/dtos/common";
+import { CreateRaceDto, CreateRaceStageDto, GetRacerByCategoryDto } from "@/dtos/races";
+import { asyncHandlerWrapper, bodyDtoValidator, parameterDtoValidator } from "@/middlewares";
 import {
-  getRaces,
   createRace,
-  createRaceStage,
   createRaceCategory,
+  createRaceStage,
+  deleteRace,
+  getRace,
   getRacers,
   getRacersByCategory,
+  getRaces,
 } from "@/services/races";
-import { CreateRaceDto, CreateRaceStageDto, GetRacerByCategoryDto } from "@/dtos/races";
-import { IDDto } from "@/dtos/common";
-import { asyncHandlerWrapper, bodyDtoValidator, parameterDtoValidator } from "@/middlewares";
-import deleteRace from "@/services/races/deleteRace";
 
 const router = Router();
 
 router.get("/", getRaces);
+router.get("/:id", parameterDtoValidator(IDDto), asyncHandlerWrapper(getRace));
 router.get("/:id/racers", parameterDtoValidator(IDDto), asyncHandlerWrapper(getRacers));
 router.get(
   "/:id/categories/:categoryId/racers",
