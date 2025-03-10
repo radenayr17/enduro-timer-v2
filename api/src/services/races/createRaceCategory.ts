@@ -6,7 +6,7 @@ import { CreateRaceStageDto } from "@/dtos/races";
 import PrismaClient from "@/prisma/client";
 
 const createRaceCategory = async (req: Request<IDDto, unknown, CreateRaceStageDto>, res: Response) => {
-  const { name, key } = req.body;
+  const { name } = req.body;
   const { id: raceId } = req.params;
 
   const race = await PrismaClient.race.findUnique({
@@ -18,6 +18,7 @@ const createRaceCategory = async (req: Request<IDDto, unknown, CreateRaceStageDt
     return res.status(404).json({ message: ErrorMessage.INVALID_REQUEST });
   }
 
+  const key = name.replace(/ /g, "_").toUpperCase();
   const category = await PrismaClient.raceCategory.create({
     data: {
       key,

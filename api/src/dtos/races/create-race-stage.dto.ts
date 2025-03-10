@@ -5,13 +5,8 @@ class CreateRaceStageDto {
   @IsNotEmpty()
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  key: string;
-
   constructor(data: CreateRaceStageDto) {
     this.name = data.name;
-    this.key = data.key;
   }
 }
 

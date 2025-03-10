@@ -19,3 +19,7 @@ export const bodyDtoValidator = (dto: any) => async (req: Request, res: Response
 export const parameterDtoValidator = (dto: any) => async (req: Request, res: Response, next: NextFunction) => {
   await dtoValidator(dto, req.params, req, res, next);
 };
+
+export const queryDtoValidator = (dto: any) => async (req: Request, res: Response, next: NextFunction) => {
+  await dtoValidator(dto, req.query, req, res, next);
+};

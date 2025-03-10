@@ -11,7 +11,6 @@ interface Props {
 export type BreadCrumbsProps = Props["data"];
 
 const BreadCrumbs = ({ data = [] }: Props) => {
-  console.log(data);
   return (
     <Breadcrumbs>
       {data.map(({ label, link }) =>

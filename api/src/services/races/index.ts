@@ -7,3 +7,5 @@ export { default as getRacers } from "./getRacers";
 export { default as getRacersByCategory } from "./getRacersByCategory";
 export { default as getRaces } from "./getRaces";
 export { default as updateRace } from "./updateRace";
+export { default as deleteCategory } from "./deleteCategory";
+export { default as deleteStage } from "./deleteStage";

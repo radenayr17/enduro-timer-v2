@@ -9,7 +9,10 @@ import Loader from "@/components/loader";
 import { TabPanel } from "@/components/tabs";
 import BreadCrumbs, { BreadCrumbsProps } from "@/components/breadcrumbs";
 
-import DetailsTab from "./details";
+import DetailTab from "./detail";
+import { CategoryTab } from "./category";
+import { StageTab } from "./stage";
+import { RacerTab } from "./racer";
 
 const RacePage = () => {
   const { id } = useParams<{ id: string }>();
@@ -40,16 +43,16 @@ const RacePage = () => {
             ))}
           </Tabs>
           <TabPanel value={tab} index="details">
-            <DetailsTab data={data} />
+            <DetailTab data={data} />
           </TabPanel>
           <TabPanel value={tab} index="categories">
-            categories
+            <CategoryTab data={data} />
           </TabPanel>
           <TabPanel value={tab} index="stages">
-            stages
+            <StageTab data={data} />
           </TabPanel>
           <TabPanel value={tab} index="racers">
-            racers
+            <RacerTab data={data} />
           </TabPanel>
         </CardContent>
       </Card>

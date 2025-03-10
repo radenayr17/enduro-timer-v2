@@ -26,7 +26,27 @@ interface Races {
   count: number;
 }
 
+export interface Racer {
+  id: string;
+  number: string;
+  firstName: string;
+  lastName: string;
+  category: RaceCategory;
+}
+
+interface Racers {
+  data: Racer[];
+  count: number;
+}
+
+interface RacerQuery {
+  categoryId?: string;
+}
+
 const RACE_BASE_URL = "/races";
+const RACE_CATEGORY_PATH = "categories";
+const RACE_STAGE_PATH = "stages";
+const RACER_PATH = "racers";
 
 const getRaces = async () => {
   const { data } = await api.get<unknown, Races>(RACE_BASE_URL);
@@ -76,4 +96,54 @@ const deleteRace = async (id: Race["id"]) => {
 
 export function useDeleteRace() {
   return useMutation(deleteRace);
+}
+
+const deleteCategory = async ({ id, subId }: { id: Race["id"]; subId: RaceCategory["id"] }) => {
+  const { data } = await api.delete<unknown, unknown>(`${RACE_BASE_URL}/${id}/${RACE_CATEGORY_PATH}/${subId}`);
+
+  return data;
+};
+
+export function useDeleteCategory() {
+  return useMutation(deleteCategory);
+}
+
+const createCategory = async ({ id, body }: { id: RaceCategory["id"]; body: Omit<RaceCategory, "id" | "key"> }) => {
+  const { data } = await api.post<unknown, Race>(`${RACE_BASE_URL}/${id}/${RACE_CATEGORY_PATH}`, body);
+
+  return data;
+};
+
+export function useCreateCategory() {
+  return useMutation(createCategory);
+}
+
+const deleteStage = async ({ id, subId }: { id: Race["id"]; subId: RaceStage["id"] }) => {
+  const { data } = await api.delete<unknown, unknown>(`${RACE_BASE_URL}/${id}/${RACE_STAGE_PATH}/${subId}`);
+
+  return data;
+};
+
+export function useDeleteStage() {
+  return useMutation(deleteStage);
+}
+
+const createStage = async ({ id, body }: { id: RaceStage["id"]; body: Omit<RaceStage, "id" | "key"> }) => {
+  const { data } = await api.post<unknown, Race>(`${RACE_BASE_URL}/${id}/${RACE_STAGE_PATH}`, body);
+
+  return data;
+};
+
+export function useCreateStage() {
+  return useMutation(createStage);
+}
+
+const getRacers = async ({ id }: { id: Race["id"] }) => {
+  const { data } = await api.get<unknown, Racers>(`${RACE_BASE_URL}/${id}/${RACER_PATH}`);
+
+  return data;
+};
+
+export function useGetRacers({ id }: { id: Race["id"] }) {
+  return useQuery([RaceApiHooks.getRacers], () => getRacers({ id }));
 }

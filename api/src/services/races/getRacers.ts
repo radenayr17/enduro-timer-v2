@@ -3,15 +3,21 @@ import { Request, Response } from "express";
 import PrismaClient from "@/prisma/client";
 import { Prisma } from "@prisma/client";
 import { IDDto } from "@/dtos/common";
+import GetRacersDto from "@/dtos/races/get-racers.dto";
 
-const getRacers = async (req: Request<IDDto>, res: Response) => {
+const getRacers = async (req: Request<IDDto, unknown, unknown, GetRacersDto>, res: Response) => {
   const { id } = req.params;
+  const { categoryId } = req.query;
 
-  const where: Prisma.RacerWhereInput = {
+  let where: Prisma.RacerWhereInput = {
     category: {
       raceId: id,
     },
   };
+
+  if (categoryId) {
+    where = { ...where, categoryId };
+  }
 
   const [racers, count] = await Promise.all([
     PrismaClient.racer.findMany({
