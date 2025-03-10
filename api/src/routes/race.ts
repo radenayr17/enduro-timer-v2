@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { IDDto } from "@/dtos/common";
-import { CreateRaceDto, CreateRaceStageDto, GetRacerByCategoryDto } from "@/dtos/races";
+import { CreateRaceDto, CreateRaceStageDto, GetRacerByCategoryDto, GetRacersDto, CreateRacerDto } from "@/dtos/races";
 import { asyncHandlerWrapper, bodyDtoValidator, parameterDtoValidator, queryDtoValidator } from "@/middlewares";
 import {
   createRace,
@@ -15,8 +15,8 @@ import {
   updateRace,
   deleteCategory,
   deleteStage,
+  createRacer,
 } from "@/services/races";
-import GetRacersDto from "@/dtos/races/get-racers.dto";
 
 const router = Router();
 
@@ -46,6 +46,12 @@ router.post(
   bodyDtoValidator(CreateRaceStageDto),
   parameterDtoValidator(IDDto),
   asyncHandlerWrapper(createRaceCategory)
+);
+router.post(
+  "/:id/racers",
+  bodyDtoValidator(CreateRacerDto),
+  parameterDtoValidator(IDDto),
+  asyncHandlerWrapper(createRacer)
 );
 
 router.put("/:id", bodyDtoValidator(CreateRaceDto), parameterDtoValidator(IDDto), asyncHandlerWrapper(updateRace));
