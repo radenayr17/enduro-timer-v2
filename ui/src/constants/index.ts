@@ -1,7 +1,7 @@
 import { Racer } from "@/hooks/api/race";
 
 export const APP_BAR_TEXT = "Enduro Timer Admin";
-export const DRAWER_WITH = 240;
+export const DRAWER_WITH = 160;
 
 export const ADMIN_RACE_PATH = "/admin/races";
 export const ADMIN_RESULT_PATH = "/admin/results";
@@ -33,5 +33,6 @@ export const DEFAULT_RACER_HEADERS: { label: string; key: string; map?: (data: R
   {
     label: "Category",
     key: "category",
+    map: (data) => data.category.name,
   },
 ];

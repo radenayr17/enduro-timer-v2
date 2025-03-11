@@ -26,12 +26,21 @@ interface Races {
   count: number;
 }
 
+export interface RacerTime {
+  id: string;
+  startTime: string;
+  finishTime: string | null;
+  diffTime: string;
+  stage: RaceStage;
+}
+
 export interface Racer {
   id: string;
   number: string;
   firstName: string;
   lastName: string;
   category: RaceCategory;
+  RacerTime: RacerTime[];
 }
 
 interface Racers {
@@ -41,6 +50,16 @@ interface Racers {
 
 interface RacerQuery {
   categoryId?: string;
+}
+
+interface RacerMutation {
+  id: string;
+  body: {
+    number: string;
+    firstName: string;
+    lastName: string;
+    categoryId: string;
+  };
 }
 
 const RACE_BASE_URL = "/races";
@@ -138,12 +157,32 @@ export function useCreateStage() {
   return useMutation(createStage);
 }
 
-const getRacers = async ({ id }: { id: Race["id"] }) => {
-  const { data } = await api.get<unknown, Racers>(`${RACE_BASE_URL}/${id}/${RACER_PATH}`);
+const getRacers = async ({ id, categoryId }: { id: Race["id"]; categoryId?: RaceCategory["id"] }) => {
+  const { data } = await api.get<unknown, Racers>(`${RACE_BASE_URL}/${id}/${RACER_PATH}`, { params: { categoryId } });
 
   return data;
 };
 
-export function useGetRacers({ id }: { id: Race["id"] }) {
-  return useQuery([RaceApiHooks.getRacers], () => getRacers({ id }));
+export function useGetRacers({ id, categoryId }: { id: Race["id"]; categoryId?: RaceCategory["id"] }) {
+  return useQuery([RaceApiHooks.getRacers], () => getRacers({ id, categoryId }));
+}
+
+const createRacer = async ({ id, body }: RacerMutation) => {
+  const { data } = await api.post<unknown, Race>(`${RACE_BASE_URL}/${id}/${RACER_PATH}`, body);
+
+  return data;
+};
+
+export function useCreateRacer() {
+  return useMutation(createRacer);
+}
+
+const deleteRacer = async ({ id, subId }: { id: Race["id"]; subId: Racer["id"] }) => {
+  const { data } = await api.delete<unknown, unknown>(`${RACE_BASE_URL}/${id}/${RACER_PATH}/${subId}`);
+
+  return data;
+};
+
+export function useDeleteRacer() {
+  return useMutation(deleteRacer);
 }

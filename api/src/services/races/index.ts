@@ -10,3 +10,4 @@ export { default as updateRace } from "./updateRace";
 export { default as deleteCategory } from "./deleteCategory";
 export { default as deleteStage } from "./deleteStage";
 export { default as createRacer } from "./createRacer";
+export { default as deleteRacer } from "./deleteRacer";

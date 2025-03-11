@@ -1,4 +1,4 @@
-import { IsArray, IsDateString, IsNotEmpty, IsUUID, ValidateNested } from "class-validator";
+import { IsAlpha, IsArray, IsDateString, IsNotEmpty, IsUUID, ValidateNested } from "class-validator";
 
 class RacerStageDto {
   @IsNotEmpty()
@@ -20,9 +20,11 @@ class CreateRacerDto {
   categoryId: string;
 
   @IsNotEmpty()
+  @IsAlpha()
   firstName: string;
 
   @IsNotEmpty()
+  @IsAlpha()
   lastName: string;
 
   @IsNotEmpty()

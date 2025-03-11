@@ -27,8 +27,8 @@ const createRacer = async (req: Request<IDDto, unknown, CreateRacerDto>, res: Re
     return res.status(404).json({ message: ErrorMessage.INVALID_REQUEST });
   }
 
-  const racerNumber = await PrismaClient.racer.findUnique({
-    where: { number },
+  const racerNumber = await PrismaClient.racer.findFirst({
+    where: { number, category: { raceId: id } },
     select: { id: true },
   });
 
@@ -42,6 +42,12 @@ const createRacer = async (req: Request<IDDto, unknown, CreateRacerDto>, res: Re
       firstName,
       lastName,
       number,
+      RacerTime: {
+        create: stages.map((stage) => ({
+          startTime: stage.startTime,
+          stageId: stage.stageId,
+        })),
+      },
     },
   });
 

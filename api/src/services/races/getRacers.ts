@@ -33,6 +33,20 @@ const getRacers = async (req: Request<IDDto, unknown, unknown, GetRacersDto>, re
             name: true,
           },
         },
+        RacerTime: {
+          select: {
+            id: true,
+            startTime: true,
+            finishTime: true,
+            diffTime: true,
+            stage: {
+              select: {
+                name: true,
+                key: true,
+              },
+            },
+          },
+        },
       },
       orderBy: { number: Prisma.SortOrder.asc },
     }),

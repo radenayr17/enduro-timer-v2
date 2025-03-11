@@ -16,6 +16,7 @@ import {
   deleteCategory,
   deleteStage,
   createRacer,
+  deleteRacer,
 } from "@/services/races";
 
 const router = Router();
@@ -59,5 +60,6 @@ router.put("/:id", bodyDtoValidator(CreateRaceDto), parameterDtoValidator(IDDto)
 router.delete("/:id", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteRace));
 router.delete("/:id/categories/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteCategory));
 router.delete("/:id/stages/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteStage));
+router.delete("/:id/racers/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteRacer));
 
 export default router;
