@@ -3,3 +3,9 @@ export enum RaceApiHooks {
   getRace = "getRace",
   getRacers = "getRacers",
 }
+
+export enum StageApiHooks {
+  getStages = "getStages",
+  getStage = "getStage",
+  getStageRecords = "getStageRecords",
+}

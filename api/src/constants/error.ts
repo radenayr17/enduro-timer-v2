@@ -17,6 +17,7 @@ export enum RaceErrorMessage {
   CATEGORY_CANNOT_BE_DELETED = "Category cannot be deleted at this moment",
   STAGE_CANNOT_BE_DELETED = "Stage cannot be deleted at this moment",
   RACER_CANNOT_BE_DELETED = "Racer cannot be deleted at this moment",
+  RECORD_CANNOT_BE_DELETED = "Record cannot be deleted at this moment",
 }
 
 export enum JWTError {

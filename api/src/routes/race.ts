@@ -1,22 +1,31 @@
 import { Router } from "express";
 
 import { IDDto } from "@/dtos/common";
-import { CreateRaceDto, CreateRaceStageDto, GetRacerByCategoryDto, GetRacersDto, CreateRacerDto } from "@/dtos/races";
+import {
+  CreateRaceDto,
+  CreateRacerDto,
+  CreateRaceRecordDto,
+  CreateRaceStageDto,
+  GetRacerByCategoryDto,
+  GetRacersDto,
+} from "@/dtos/races";
 import { asyncHandlerWrapper, bodyDtoValidator, parameterDtoValidator, queryDtoValidator } from "@/middlewares";
 import {
   createRace,
   createRaceCategory,
+  createRacer,
+  createRaceRecord,
   createRaceStage,
+  deleteCategory,
   deleteRace,
+  deleteRacer,
+  deleteRaceRecord,
+  deleteStage,
   getRace,
   getRacers,
   getRacersByCategory,
   getRaces,
   updateRace,
-  deleteCategory,
-  deleteStage,
-  createRacer,
-  deleteRacer,
 } from "@/services/races";
 
 const router = Router();
@@ -54,6 +63,12 @@ router.post(
   parameterDtoValidator(IDDto),
   asyncHandlerWrapper(createRacer)
 );
+router.post(
+  "/:id/records",
+  bodyDtoValidator(CreateRaceRecordDto),
+  parameterDtoValidator(IDDto),
+  asyncHandlerWrapper(createRaceRecord)
+);
 
 router.put("/:id", bodyDtoValidator(CreateRaceDto), parameterDtoValidator(IDDto), asyncHandlerWrapper(updateRace));
 
@@ -61,5 +76,6 @@ router.delete("/:id", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteRa
 router.delete("/:id/categories/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteCategory));
 router.delete("/:id/stages/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteStage));
 router.delete("/:id/racers/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteRacer));
+router.delete("/:id/records/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteRaceRecord));
 
 export default router;

@@ -64,7 +64,7 @@ interface RacerMutation {
 
 const RACE_BASE_URL = "/races";
 const RACE_CATEGORY_PATH = "categories";
-const RACE_STAGE_PATH = "stages";
+export const RACE_STAGE_PATH = "stages";
 const RACER_PATH = "racers";
 
 const getRaces = async () => {

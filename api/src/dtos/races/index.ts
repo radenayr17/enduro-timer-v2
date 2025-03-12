@@ -3,3 +3,4 @@ export { default as CreateRaceStageDto } from "./create-race-stage.dto";
 export { default as GetRacerByCategoryDto } from "./get-racers-by-category.dto";
 export { default as GetRacersDto } from "./get-racers.dto";
 export { default as CreateRacerDto } from "./creater-racer.dto";
+export { default as CreateRaceRecordDto } from "./create-race-record.dto";

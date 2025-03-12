@@ -11,3 +11,5 @@ export { default as deleteCategory } from "./deleteCategory";
 export { default as deleteStage } from "./deleteStage";
 export { default as createRacer } from "./createRacer";
 export { default as deleteRacer } from "./deleteRacer";
+export { default as createRaceRecord } from "./createRaceRecord";
+export { default as deleteRaceRecord } from "./deleteRaceRecord";
