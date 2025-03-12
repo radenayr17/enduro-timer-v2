@@ -10,6 +10,7 @@ interface Props {
   cancelText?: string;
   confirmText?: string;
   onConfirm?: () => void;
+  size?: "small" | "medium" | "large";
 }
 
 const ConfirmDialog = ({
@@ -19,6 +20,7 @@ const ConfirmDialog = ({
   cancelText = "Cancel",
   confirmText = "Confirm",
   onConfirm = () => {},
+  size = "medium",
 }: Props) => {
   const { toggle, onToggle } = useToggle(false);
 
@@ -27,7 +29,7 @@ const ConfirmDialog = ({
 
   return (
     <>
-      <Button color="error" onClick={handleOpen}>
+      <Button color="error" onClick={handleOpen} size={size}>
         {btnText}
       </Button>
       <Dialog open={toggle} onClose={handleClose} maxWidth="sm" fullWidth>

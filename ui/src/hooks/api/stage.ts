@@ -25,6 +25,8 @@ interface Stages {
 interface StageRecord {
   id: string;
   time: string;
+  stageId: string;
+  racerId: string;
   race: {
     name: string;
   };
@@ -87,4 +89,14 @@ const createStageRecord = async ({ id, body }: StageRecordMutation) => {
 
 export const useCreateStageRecord = () => {
   return useMutation(createStageRecord);
+};
+
+const deleteStageRecord = async ({ id, subId }: { id: Stage["id"]; subId: StageRecord["id"] }) => {
+  const { data } = await api.delete(`${STAGE_BASE_URL}/${id}/${STAGE_RECORD_PATH}/${subId}`);
+
+  return data;
+};
+
+export const useDeleteStageRecord = () => {
+  return useMutation(deleteStageRecord);
 };

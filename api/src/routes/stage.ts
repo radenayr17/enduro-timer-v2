@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { IDDto } from "@/dtos/common";
 import { CreateStageRecordDto } from "@/dtos/stages";
-import { getStages, getStage, getStageRecords, createStageRecord } from "@/services/stages";
+import { getStages, getStage, getStageRecords, createStageRecord, deleteStageRecord } from "@/services/stages";
 import { asyncHandlerWrapper, bodyDtoValidator, parameterDtoValidator } from "@/middlewares";
 
 const router = Router();
@@ -17,5 +17,7 @@ router.post(
   bodyDtoValidator(CreateStageRecordDto),
   asyncHandlerWrapper(createStageRecord)
 );
+
+router.delete("/:id/records/:subId", parameterDtoValidator(IDDto), asyncHandlerWrapper(deleteStageRecord));
 
 export default router;

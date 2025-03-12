@@ -7,12 +7,21 @@ interface Props {
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
   color?: "primary" | "secondary" | "error" | "info" | "success" | "warning";
+  size?: "small" | "medium" | "large";
 }
 
 const Button = (props: Props) => {
-  const { variant = "contained", children, onClick = () => {}, type = "button", color = "primary", ...rest } = props;
+  const {
+    variant = "contained",
+    children,
+    onClick = () => {},
+    type = "button",
+    color = "primary",
+    size = "medium",
+    ...rest
+  } = props;
   return (
-    <MUIButton variant={variant} onClick={onClick} type={type} color={color} {...rest}>
+    <MUIButton variant={variant} onClick={onClick} type={type} color={color} size={size} {...rest}>
       {children}
     </MUIButton>
   );

@@ -6,24 +6,38 @@ import { toast } from "react-toastify";
 import Button from "@/components/button";
 import { DateFormat } from "@/constants/date";
 import { StageApiHooks } from "@/constants/hooks";
-import { Stage, useCreateStageRecord, useGetStageRecords } from "@/hooks/api/stage";
+import { Stage, useCreateStageRecord, useGetStageRecords, useDeleteStageRecord } from "@/hooks/api/stage";
 import { formatDate } from "@/utils/date";
+import ConfirmDialog from "@/components/confirm-dialog";
 
 interface Props {
   id: Stage["id"];
 }
 
 const EventTable = ({ id }: Props) => {
-  const { data, refetch } = useGetStageRecords(id);
-  const { mutate } = useCreateStageRecord();
+  const { data } = useGetStageRecords(id);
+  const { mutate: addStageRecord } = useCreateStageRecord();
+  const { mutate: deleteStageRecord } = useDeleteStageRecord();
   const queryClient = useQueryClient();
 
   const records = data ?? [];
 
-  console.log(id);
+  const handleDelete = (recordId) => {
+    deleteStageRecord(
+      { id, subId: recordId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(StageApiHooks.getStageRecords);
+        },
+        onError: (error) => {
+          toast.error((error as Error).message);
+        },
+      }
+    );
+  };
 
   const handleAddRecord = () => {
-    mutate(
+    addStageRecord(
       {
         id,
         body: { time: dayjs().toISOString() },
@@ -53,14 +67,23 @@ const EventTable = ({ id }: Props) => {
               <TableCell>Time</TableCell>
               <TableCell>Stage</TableCell>
               <TableCell>Racer</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {records.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>{formatDate(row.time, DateFormat.hhmmsssA)}</TableCell>
+                <TableCell>{row.stage.name}</TableCell>
+                <TableCell></TableCell>
                 <TableCell>
-                  {row.stage.name} - {row.race.name}
+                  <ConfirmDialog
+                    size="small"
+                    btnText="Delete"
+                    text="Are you sure you want to delete?"
+                    title={`Delete '${formatDate(row.time, DateFormat.hhmmsssA)}'`}
+                    onConfirm={() => handleDelete(row.id)}
+                  />
                 </TableCell>
               </TableRow>
             ))}
