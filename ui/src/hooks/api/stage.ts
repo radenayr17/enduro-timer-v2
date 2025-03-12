@@ -48,6 +48,14 @@ interface StageRecordMutation {
   };
 }
 
+interface AssignStageRecordMutation {
+  id: Stage["id"];
+  recordId: StageRecord["id"];
+  body: {
+    racerId: StageRecord["racerId"];
+  };
+}
+
 const STAGE_BASE_URL = `/${RACE_STAGE_PATH}`;
 const STAGE_RECORD_PATH = "records";
 
@@ -99,4 +107,17 @@ const deleteStageRecord = async ({ id, subId }: { id: Stage["id"]; subId: StageR
 
 export const useDeleteStageRecord = () => {
   return useMutation(deleteStageRecord);
+};
+
+const assignStageRecord = async ({ id, recordId, body }: AssignStageRecordMutation) => {
+  const { data } = await api.post<unknown, StageRecord>(
+    `${STAGE_BASE_URL}/${id}/${STAGE_RECORD_PATH}/${recordId}/assign`,
+    body
+  );
+
+  return data;
+};
+
+export const useAssignStageRecord = () => {
+  return useMutation(assignStageRecord);
 };

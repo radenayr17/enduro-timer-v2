@@ -6,12 +6,21 @@ import BreadCrumbs, { BreadCrumbsProps } from "@/components/breadcrumbs";
 import Loader from "@/components/loader";
 import { ADMIN_EVENT_PATH } from "@/constants";
 import { useGetStage } from "@/hooks/api/stage";
+import { useGetRacers, Racer } from "@/hooks/api/race";
 
 import Table from "./table";
+import { useEffect } from "react";
 
 const EventPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading } = useGetStage(id);
+  const { data: racers, refetch } = useGetRacers({ id: data?.raceId, enabled: false });
+
+  const racerData = racers?.data ?? [];
+
+  useEffect(() => {
+    if (data) refetch();
+  }, [data]);
 
   if (!data) {
     if (isLoading) {
@@ -24,6 +33,8 @@ const EventPage = () => {
   const { race, name } = data;
   const title = `${name} - ${race.name}`;
 
+  console.log("raceId", data.raceId);
+
   const breadcrumbs: BreadCrumbsProps = [{ label: "Event", link: ADMIN_EVENT_PATH }, { label: title }];
 
   return (
@@ -32,7 +43,7 @@ const EventPage = () => {
         <Typography variant="h4">{title}</Typography>
         <BreadCrumbs data={breadcrumbs} />
       </Stack>
-      <Table id={id} />
+      <Table id={id} racers={racerData} />
     </Box>
   );
 };

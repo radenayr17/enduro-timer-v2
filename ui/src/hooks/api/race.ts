@@ -163,8 +163,16 @@ const getRacers = async ({ id, categoryId }: { id: Race["id"]; categoryId?: Race
   return data;
 };
 
-export function useGetRacers({ id, categoryId }: { id: Race["id"]; categoryId?: RaceCategory["id"] }) {
-  return useQuery([RaceApiHooks.getRacers], () => getRacers({ id, categoryId }));
+export function useGetRacers({
+  id,
+  categoryId,
+  enabled = true,
+}: {
+  id: Race["id"];
+  categoryId?: RaceCategory["id"];
+  enabled?: boolean;
+}) {
+  return useQuery([RaceApiHooks.getRacers], () => getRacers({ id, categoryId }), { enabled });
 }
 
 const createRacer = async ({ id, body }: RacerMutation) => {

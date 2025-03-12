@@ -1,26 +1,41 @@
+"use client";
 import { Box, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import dayjs from "dayjs";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 import Button from "@/components/button";
+import ConfirmDialog from "@/components/confirm-dialog";
 import { DateFormat } from "@/constants/date";
 import { StageApiHooks } from "@/constants/hooks";
-import { Stage, useCreateStageRecord, useGetStageRecords, useDeleteStageRecord } from "@/hooks/api/stage";
+import { Racer } from "@/hooks/api/race";
+import {
+  Stage,
+  useCreateStageRecord,
+  useDeleteStageRecord,
+  useGetStageRecords,
+  useAssignStageRecord,
+} from "@/hooks/api/stage";
 import { formatDate } from "@/utils/date";
-import ConfirmDialog from "@/components/confirm-dialog";
+import AutoComplete from "@/components/autocomplete";
 
 interface Props {
   id: Stage["id"];
+  racers: Racer[];
 }
 
-const EventTable = ({ id }: Props) => {
+const EventTable = ({ id, racers }: Props) => {
   const { data } = useGetStageRecords(id);
   const { mutate: addStageRecord } = useCreateStageRecord();
   const { mutate: deleteStageRecord } = useDeleteStageRecord();
+  const { mutate: assignStageRecord } = useAssignStageRecord();
   const queryClient = useQueryClient();
 
   const records = data ?? [];
+  const racersOptions = racers.map((racer) => ({
+    label: `${racer.number} - ${racer.firstName} ${racer.lastName}`,
+    value: racer.id,
+  }));
 
   const handleDelete = (recordId) => {
     deleteStageRecord(
@@ -42,6 +57,20 @@ const EventTable = ({ id }: Props) => {
         id,
         body: { time: dayjs().toISOString() },
       },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(StageApiHooks.getStageRecords);
+        },
+        onError: (error) => {
+          toast.error((error as Error).message);
+        },
+      }
+    );
+  };
+
+  const handleAssignRacer = (recordId, racerId) => {
+    assignStageRecord(
+      { id, recordId, body: { racerId } },
       {
         onSuccess: () => {
           queryClient.invalidateQueries(StageApiHooks.getStageRecords);
@@ -75,7 +104,14 @@ const EventTable = ({ id }: Props) => {
               <TableRow key={row.id}>
                 <TableCell>{formatDate(row.time, DateFormat.hhmmsssA)}</TableCell>
                 <TableCell>{row.stage.name}</TableCell>
-                <TableCell></TableCell>
+                <TableCell width={400}>
+                  <AutoComplete
+                    size="small"
+                    options={racersOptions}
+                    value={row.racerId ?? ""}
+                    onChange={(value) => handleAssignRacer(row.id, value)}
+                  />
+                </TableCell>
                 <TableCell>
                   <ConfirmDialog
                     size="small"
