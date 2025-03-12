@@ -109,6 +109,7 @@ const EventTable = ({ id, racers }: Props) => {
                     size="small"
                     options={racersOptions}
                     value={row.racerId ?? ""}
+                    disableClearable
                     onChange={(value) => handleAssignRacer(row.id, value)}
                   />
                 </TableCell>

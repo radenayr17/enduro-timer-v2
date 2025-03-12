@@ -12,6 +12,7 @@ interface Props {
   size?: "small" | "medium";
   onChange?: (value: string) => void;
   value?: string;
+  disableClearable?: boolean;
 }
 
 const AutoComplete = ({ size = "medium", options = [], onChange = () => {}, ...props }: Props) => {
@@ -21,6 +22,7 @@ const AutoComplete = ({ size = "medium", options = [], onChange = () => {}, ...p
 
   return (
     <Autocomplete
+      {...props}
       value={value}
       options={options}
       onChange={handleChange}
