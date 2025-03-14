@@ -22,16 +22,7 @@ const formatStageTime = (key: string, data: RacerTime[]) => {
   const startTime: string = stageTime.startTime ? dayjs(stageTime.startTime).format("hh:mm:ss a") : "";
   const finishTime: string = stageTime.finishTime ? dayjs(stageTime.finishTime).format("hh:mm:ss a") : "";
 
-  return `${startTime} - ${finishTime}${diffTime ? `(${formatMSTime(diffTime)})` : ""}`;
-};
-
-const formatTotalTime = (ms: number): string => {
-  const seconds = Math.floor(ms / 1000);
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
-
-  return `${hours ? `${hours}h` : ""} ${minutes}m ${remainingSeconds}s`;
+  return `${startTime} - ${finishTime}${diffTime ? ` (${formatMSTime(diffTime)})` : ""}`;
 };
 
 const ResultTab = ({ raceId: id, categoryId, stages }: Props) => {
