@@ -18,6 +18,7 @@ import {
 } from "@/hooks/api/stage";
 import { formatDate } from "@/utils/date";
 import AutoComplete from "@/components/autocomplete";
+import { formatMSTime } from "@/utils/date";
 
 interface Props {
   id: Stage["id"];
@@ -74,6 +75,8 @@ const EventTable = ({ id, racers }: Props) => {
       {
         onSuccess: () => {
           queryClient.invalidateQueries(StageApiHooks.getStageRecords);
+
+          toast.success("Racer assigned successfully");
         },
         onError: (error) => {
           toast.error((error as Error).message);
@@ -102,7 +105,10 @@ const EventTable = ({ id, racers }: Props) => {
           <TableBody>
             {records.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{formatDate(row.time, DateFormat.hhmmsssA)}</TableCell>
+                <TableCell>
+                  {formatDate(row.time, DateFormat.hhmmsssA)} -{" "}
+                  {row.racerTime && row.racerTime.length ? formatMSTime(row.racerTime[0].diffTime) : ""}
+                </TableCell>
                 <TableCell>{row.stage.name}</TableCell>
                 <TableCell width={400}>
                   <AutoComplete

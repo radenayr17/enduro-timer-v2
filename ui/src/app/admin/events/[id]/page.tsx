@@ -14,13 +14,15 @@ import { useEffect } from "react";
 const EventPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading } = useGetStage(id);
-  const { data: racers, refetch } = useGetRacers({ id: data?.raceId, enabled: false });
 
+  const raceId = data?.raceId || null;
+
+  const { data: racers, refetch } = useGetRacers({ id: raceId, enabled: true });
   const racerData = racers?.data ?? [];
 
   useEffect(() => {
-    if (data) refetch();
-  }, [data]);
+    if (raceId) refetch();
+  }, [raceId]);
 
   if (!data) {
     if (isLoading) {
@@ -32,9 +34,6 @@ const EventPage = () => {
 
   const { race, name } = data;
   const title = `${name} - ${race.name}`;
-
-  console.log("raceId", data.raceId);
-
   const breadcrumbs: BreadCrumbsProps = [{ label: "Event", link: ADMIN_EVENT_PATH }, { label: title }];
 
   return (

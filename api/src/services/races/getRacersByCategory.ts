@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
-import { GetRacerByCategoryDto } from "@/dtos/races";
+import { IDDto } from "@/dtos/common";
 import PrismaClient from "@/prisma/client";
 import { Prisma } from "@prisma/client";
 
-const getRacersByCategory = async (req: Request<GetRacerByCategoryDto>, res: Response) => {
-  const { categoryId } = req.params;
+const getRacersByCategory = async (req: Request<IDDto>, res: Response) => {
+  const { subId: categoryId } = req.params;
 
   const where: Prisma.RacerWhereInput = { categoryId };
 

@@ -1,4 +1,4 @@
-import { Racer } from "@/hooks/api/race";
+import { Racer, RacerResult } from "@/hooks/api/race";
 
 export const APP_BAR_TEXT = "Enduro Timer Admin";
 export const DRAWER_WITH = 160;
@@ -20,7 +20,7 @@ export const RACE_TABS: { label: string; value: string }[] = [
   { label: "Racers", value: "racers" },
 ];
 
-export const DEFAULT_RACER_HEADERS: { label: string; key: string; map?: (data: Racer) => void }[] = [
+export const DEFAULT_RACER_HEADERS: { label: string; key: string; map?: (data: Racer | RacerResult) => void }[] = [
   {
     label: "Number",
     key: "number",

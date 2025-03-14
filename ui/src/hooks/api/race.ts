@@ -30,7 +30,7 @@ export interface RacerTime {
   id: string;
   startTime: string;
   finishTime: string | null;
-  diffTime: string;
+  diffTime: number;
   stage: RaceStage;
 }
 
@@ -48,10 +48,6 @@ interface Racers {
   count: number;
 }
 
-interface RacerQuery {
-  categoryId?: string;
-}
-
 interface RacerMutation {
   id: string;
   body: {
@@ -62,10 +58,43 @@ interface RacerMutation {
   };
 }
 
+/*
+export interface RacerTime {
+  id: string;
+  startTime: string;
+  finishTime: string | null;
+  diffTime: string;
+  stage: RaceStage;
+}
+
+export interface Racer {
+  id: string;
+  number: string;
+  firstName: string;
+  lastName: string;
+  category: RaceCategory;
+  RacerTime: RacerTime[];
+}
+*/
+
+interface RacerTimeResult extends RacerTime {
+  record: {
+    id: string;
+    time: string;
+  };
+}
+
+export interface RacerResult extends Omit<Racer, "RacerTime"> {
+  RacerTime: RacerTimeResult[];
+  isDNF: boolean;
+  totalTime: number;
+}
+
 const RACE_BASE_URL = "/races";
 const RACE_CATEGORY_PATH = "categories";
 export const RACE_STAGE_PATH = "stages";
 const RACER_PATH = "racers";
+const RESULT_PATH = "results";
 
 const getRaces = async () => {
   const { data } = await api.get<unknown, Races>(RACE_BASE_URL);
@@ -193,4 +222,16 @@ const deleteRacer = async ({ id, subId }: { id: Race["id"]; subId: Racer["id"] }
 
 export function useDeleteRacer() {
   return useMutation(deleteRacer);
+}
+
+const getResults = async ({ id, categoryId }: { id: Race["id"]; categoryId: RaceCategory["id"] }) => {
+  const { data } = await api.get<unknown, RacerResult[]>(
+    `${RACE_BASE_URL}/${id}/categories/${categoryId}/${RESULT_PATH}`
+  );
+
+  return data;
+};
+
+export function useGetResults({ id, categoryId }: { id: Race["id"]; categoryId?: RaceCategory["id"] }) {
+  return useQuery([RaceApiHooks.getResults], () => getResults({ id, categoryId }));
 }

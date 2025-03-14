@@ -26,6 +26,7 @@ import {
   getRacersByCategory,
   getRaces,
   updateRace,
+  getResults,
 } from "@/services/races";
 
 const router = Router();
@@ -38,11 +39,8 @@ router.get(
   queryDtoValidator(GetRacersDto),
   asyncHandlerWrapper(getRacers)
 );
-router.get(
-  "/:id/categories/:categoryId/racers",
-  parameterDtoValidator(GetRacerByCategoryDto),
-  asyncHandlerWrapper(getRacersByCategory)
-);
+router.get("/:id/categories/:subId/racers", parameterDtoValidator(IDDto), asyncHandlerWrapper(getRacersByCategory));
+router.get("/:id/categories/:subId/results", parameterDtoValidator(IDDto), asyncHandlerWrapper(getResults));
 
 router.post("/", bodyDtoValidator(CreateRaceDto), asyncHandlerWrapper(createRace));
 router.post(

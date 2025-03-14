@@ -24,6 +24,7 @@ const getStageRecords = async (req: Request<IDDto>, res: Response) => {
       racer: { select: { id: true, number: true, firstName: true, lastName: true } },
       race: { select: { name: true } },
       stage: { select: { name: true } },
+      racerTime: { select: { id: true, startTime: true, finishTime: true, diffTime: true } },
     },
     orderBy: { time: "desc" },
   });

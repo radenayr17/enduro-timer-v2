@@ -39,6 +39,9 @@ interface StageRecord {
     firstName: string;
     lastName: string;
   };
+  racerTime?: {
+    diffTime: number;
+  }[];
 }
 
 interface StageRecordMutation {

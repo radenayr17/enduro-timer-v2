@@ -103,11 +103,13 @@ model RacerTime {
   diffTime   Int       @default(0)
   racerId    String
   stageId    String
+  recordId   String?
 
   createdAt DateTime @default(now())
 
-  racer Racer     @relation(fields: [racerId], references: [id])
-  stage RaceStage @relation(fields: [stageId], references: [id])
+  racer  Racer       @relation(fields: [racerId], references: [id])
+  stage  RaceStage   @relation(fields: [stageId], references: [id])
+  record RaceRecord? @relation(fields: [recordId], references: [id])
 }
 
 model RaceRecord {
@@ -119,7 +121,8 @@ model RaceRecord {
 
   createdAt DateTime @default(now())
 
-  racer Racer?    @relation(fields: [racerId], references: [id])
-  race  Race      @relation(fields: [raceId], references: [id])
-  stage RaceStage @relation(fields: [stageId], references: [id])
+  racer     Racer?      @relation(fields: [racerId], references: [id])
+  race      Race        @relation(fields: [raceId], references: [id])
+  stage     RaceStage   @relation(fields: [stageId], references: [id])
+  racerTime RacerTime[]
 }

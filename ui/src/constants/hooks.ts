@@ -2,6 +2,7 @@ export enum RaceApiHooks {
   getRaces = "getRaces",
   getRace = "getRace",
   getRacers = "getRacers",
+  getResults = "getResults",
 }
 
 export enum StageApiHooks {

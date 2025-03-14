@@ -13,3 +13,4 @@ export { default as createRacer } from "./createRacer";
 export { default as deleteRacer } from "./deleteRacer";
 export { default as createRaceRecord } from "./createRaceRecord";
 export { default as deleteRaceRecord } from "./deleteRaceRecord";
+export { default as getResults } from "./getResults";
