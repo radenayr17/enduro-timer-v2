@@ -41,6 +41,8 @@ export interface Racer {
   lastName: string;
   category: RaceCategory;
   RacerTime: RacerTime[];
+  address: string;
+  teams: string;
 }
 
 interface Racers {

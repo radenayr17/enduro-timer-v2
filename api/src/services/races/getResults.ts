@@ -24,6 +24,8 @@ const getResults = async (req: Request<IDDto>, res: Response) => {
       lastName: true,
       number: true,
       category: true,
+      teams: true,
+      address: true,
       RacerTime: {
         select: {
           id: true,

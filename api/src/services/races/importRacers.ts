@@ -90,6 +90,8 @@ const importRacer = async (req: Request<IDDto>, res: Response) => {
             firstName: record.FIRST_NAME,
             lastName: record.LAST_NAME,
             categoryId: category.id,
+            address: record.ADDRESS ?? "",
+            teams: record.TEAMS ?? "",
             RacerTime: {
               create: racerTime,
             },
@@ -102,6 +104,8 @@ const importRacer = async (req: Request<IDDto>, res: Response) => {
             firstName: record.FIRST_NAME,
             lastName: record.LAST_NAME,
             categoryId: category.id,
+            address: record.ADDRESS ?? "",
+            teams: record.TEAMS ?? "",
             RacerTime: {
               create: racerTime,
             },

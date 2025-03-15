@@ -27,6 +27,8 @@ const getRacers = async (req: Request<IDDto, unknown, unknown, GetRacersDto>, re
         firstName: true,
         lastName: true,
         number: true,
+        address: true,
+        teams: true,
         category: {
           select: {
             id: true,

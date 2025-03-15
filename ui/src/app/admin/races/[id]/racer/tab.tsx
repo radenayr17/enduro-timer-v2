@@ -19,7 +19,7 @@ import ConfirmDialog from "@/components/confirm-dialog";
 import { DEFAULT_RACER_HEADERS } from "@/constants";
 import { racersFiltersParamsKeys, RacersFiltersParamValues } from "@/constants/filters";
 import { RaceApiHooks } from "@/constants/hooks";
-import { Race, RacerTime, useDeleteRacer, useGetRacers } from "@/hooks/api/race";
+import { Race, Racer, RacerTime, useDeleteRacer, useGetRacers } from "@/hooks/api/race";
 import { useFilters } from "@/hooks/use-filters";
 import Select from "@/components/select";
 
@@ -43,7 +43,23 @@ const formatStageTime = (key: string, data: RacerTime[]) => {
   return startTime;
 };
 
-const Racer = ({ data }: Props) => {
+const formatName = (data: Racer) => {
+  return (
+    <Stack>
+      <Box>
+        {data.firstName} {data.lastName}
+      </Box>
+      <Box>
+        <strong>Teams</strong>: {data.teams}
+      </Box>
+      <Box>
+        <strong>Address</strong>: {data.address}
+      </Box>
+    </Stack>
+  );
+};
+
+const RacerTab = ({ data }: Props) => {
   const { id: raceId, RaceStage: stages, RaceCategory } = data;
 
   const queryClient = useQueryClient();
@@ -99,7 +115,7 @@ const Racer = ({ data }: Props) => {
         </Stack>
       </Stack>
       <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+        <Table aria-label="simple table dense">
           <TableHead>
             <TableRow>
               {headers.map((header) => (
@@ -114,6 +130,8 @@ const Racer = ({ data }: Props) => {
                 {headers.map((header) => {
                   const value = stageList.includes(header.key)
                     ? formatStageTime(header.key, row.RacerTime)
+                    : header.key === "name"
+                    ? formatName(row)
                     : header.map
                     ? header.map(row)
                     : row[header.key];
@@ -125,6 +143,7 @@ const Racer = ({ data }: Props) => {
                     text="Are you sure you want to delete?"
                     title={`Delete racer '${row.firstName} ${row.lastName}(Race#${row.number})'`}
                     onConfirm={() => handleDelete(row.id)}
+                    size="small"
                   />
                 </TableCell>
               </TableRow>
@@ -136,4 +155,4 @@ const Racer = ({ data }: Props) => {
   );
 };
 
-export default Racer;
+export default RacerTab;

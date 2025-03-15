@@ -32,6 +32,7 @@ const RacerForm = ({ data }: Props) => {
   const handleSubmit = (values) => {
     const body = {
       ...values,
+      number: parseInt(values.number),
       stages: values.stages.map((stage) => {
         const { stageId, startDate, startTime } = stage;
         const startingTime = dayjs(startDate)

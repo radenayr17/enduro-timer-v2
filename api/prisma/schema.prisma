@@ -82,11 +82,13 @@ model RaceCategory {
 }
 
 model Racer {
-  id         String @id @default(uuid())
+  id         String  @id @default(uuid())
   number     Int
   firstName  String
   lastName   String
   categoryId String
+  address    String? @default("")
+  teams      String? @default("")
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt

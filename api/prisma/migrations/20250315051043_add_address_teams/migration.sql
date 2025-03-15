@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `racer` ADD COLUMN `address` VARCHAR(191) NULL DEFAULT '',
+    ADD COLUMN `teams` VARCHAR(191) NULL DEFAULT '';
