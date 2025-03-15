@@ -40,6 +40,7 @@ interface StageRecord {
     lastName: string;
   };
   racerTime?: {
+    startTime: string;
     diffTime: number;
   }[];
 }

@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
+import AutoComplete from "@/components/autocomplete";
 import Button from "@/components/button";
 import ConfirmDialog from "@/components/confirm-dialog";
 import { DateFormat } from "@/constants/date";
@@ -11,14 +12,12 @@ import { StageApiHooks } from "@/constants/hooks";
 import { Racer } from "@/hooks/api/race";
 import {
   Stage,
+  useAssignStageRecord,
   useCreateStageRecord,
   useDeleteStageRecord,
   useGetStageRecords,
-  useAssignStageRecord,
 } from "@/hooks/api/stage";
-import { formatDate } from "@/utils/date";
-import AutoComplete from "@/components/autocomplete";
-import { formatMSTime } from "@/utils/date";
+import { formatDate, formatMSTime } from "@/utils/date";
 
 interface Props {
   id: Stage["id"];
@@ -106,10 +105,13 @@ const EventTable = ({ id, racers }: Props) => {
             {records.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>
-                  {formatDate(row.time, DateFormat.hhmmsssA)} -{" "}
-                  {row.racerTime && row.racerTime.length ? formatMSTime(row.racerTime[0].diffTime) : ""}
+                  {row.racerTime && row.racerTime.length
+                    ? `${formatDate(row.racerTime[0].startTime, DateFormat.hhmmssA)} - `
+                    : ""}
+                  <strong>{formatDate(row.time, DateFormat.hhmmsssA)}</strong>
+                  {row.racerTime && row.racerTime.length ? ` (${formatMSTime(row.racerTime[0].diffTime)})` : ""}
                 </TableCell>
-                <TableCell>{row.stage.name}</TableCell>
+                <TableCell width={100}>{row.stage.name}</TableCell>
                 <TableCell width={400}>
                   <AutoComplete
                     size="small"
@@ -119,7 +121,7 @@ const EventTable = ({ id, racers }: Props) => {
                     onChange={(value) => handleAssignRacer(row.id, value)}
                   />
                 </TableCell>
-                <TableCell>
+                <TableCell width={100}>
                   <ConfirmDialog
                     size="small"
                     btnText="Delete"
