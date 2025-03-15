@@ -55,14 +55,16 @@ const ResultTab = ({ raceId: id, categoryId, stages }: Props) => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell>Rank</TableCell>
             {headers.map((header) => (
               <TableCell key={header.key}>{header.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((row) => (
+          {data?.map((row, key) => (
             <TableRow key={row.id}>
+              <TableCell>{key + 1}</TableCell>
               {headers.map((header) => {
                 const value = stageList.includes(header.key)
                   ? formatStageTime(header.key, row.RacerTime)

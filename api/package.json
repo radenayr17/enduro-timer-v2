@@ -6,8 +6,9 @@
   "scripts": {
     "build": "rimraf dist && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "dev": "npm run migrate:dev && nodemon -r tsconfig-paths/register src/index.ts",
-    "start": "npm run migrate:dev && node dist/src/index.js",
-    "migrate:dev": "prisma migrate dev"
+    "start": "npm run migrate:deploy && node dist/src/index.js",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
