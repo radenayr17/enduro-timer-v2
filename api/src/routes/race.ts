@@ -1,14 +1,8 @@
 import { Router } from "express";
+import multer from "multer";
 
 import { IDDto } from "@/dtos/common";
-import {
-  CreateRaceDto,
-  CreateRacerDto,
-  CreateRaceRecordDto,
-  CreateRaceStageDto,
-  GetRacerByCategoryDto,
-  GetRacersDto,
-} from "@/dtos/races";
+import { CreateRaceDto, CreateRacerDto, CreateRaceRecordDto, CreateRaceStageDto, GetRacersDto } from "@/dtos/races";
 import { asyncHandlerWrapper, bodyDtoValidator, parameterDtoValidator, queryDtoValidator } from "@/middlewares";
 import {
   createRace,
@@ -27,8 +21,10 @@ import {
   getRaces,
   updateRace,
   getResults,
+  importRacers,
 } from "@/services/races";
 
+const upload = multer({ storage: multer.memoryStorage() });
 const router = Router();
 
 router.get("/", getRaces);
@@ -67,6 +63,7 @@ router.post(
   parameterDtoValidator(IDDto),
   asyncHandlerWrapper(createRaceRecord)
 );
+router.post("/:id/import", upload.single("file"), parameterDtoValidator(IDDto), asyncHandlerWrapper(importRacers));
 
 router.put("/:id", bodyDtoValidator(CreateRaceDto), parameterDtoValidator(IDDto), asyncHandlerWrapper(updateRace));
 

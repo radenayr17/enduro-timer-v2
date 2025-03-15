@@ -9,6 +9,7 @@ export enum ErrorMessage {
   NOT_ALLOWED = "Not allowed",
   NOT_FOUND = "Not found",
   INVALID_REQUEST = "Invalid request",
+  FILE_NOT_FOUND = "File not found",
 }
 
 export enum RaceErrorMessage {

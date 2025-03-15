@@ -83,7 +83,7 @@ model RaceCategory {
 
 model Racer {
   id         String @id @default(uuid())
-  number     String
+  number     Int
   firstName  String
   lastName   String
   categoryId String
